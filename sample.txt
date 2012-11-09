@@ -1,0 +1,9 @@
+[background: Classroom.png; character_right: Friend.png;]
+Friend: "This is a new game."
+[character_left: Person_Template.png;]
+Mu: "What do you want to do?"
+Friend: "There isn't anything to do though."
+Mu: "Yeah..."
+Friend: ":)"
+Mu: ":)"
+---: ":)"
