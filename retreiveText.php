@@ -1,5 +1,5 @@
 <?php
-/*	Visual Novel Engine v0.05
+/*	Visual Novel Engine v0.75
 	Copyright 2012 Brian Crucitti - bcrucitti@gmail.com
 	
 	This file is part of Visual Novel Engine.

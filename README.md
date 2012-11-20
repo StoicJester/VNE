@@ -38,3 +38,4 @@ option.init = function(){
 	//anything that needs to be done when this option is initialized
 };
 vn.addTitleOption(option); //add option to Visual Novel object
+//repeat the above steps as necessary 
