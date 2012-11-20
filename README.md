@@ -22,3 +22,19 @@ folder.
 Any questions or desires can be directed to my email: bcrucitti@gmail.com
 
 I will keep working on this project, so keep an eye on updates.
+
+Title Screen Setup
+var option = new TitleOption; //create a new option
+option.confirmed = function(){
+	//what to do if this option has been selected and Enter pressed
+}
+option.selected = function(){
+	//what to do if this option is selected/highlighted
+};
+option.deselected = function(){
+	//what to do if this option isn't selected aka if it isn't active
+};
+option.init = function(){
+	//anything that needs to be done when this option is initialized
+};
+vn.addTitleOption(option); //add option to Visual Novel object

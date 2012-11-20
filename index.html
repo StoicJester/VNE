@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<!--	
+	Visual Novel Engine v0.05
+	Copyright 2012 Brian Crucitti - bcrucitti@gmail.com
+	
+	This file is part of Visual Novel Engine.
+
+    Visual Novel Engine is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    Visual Novel Engine is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with Visual Novel Engine.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<head>
+	<title>Visual Novel</title>
+	<meta content="Brian Crucitti" name="author" />
+	<link media="screen" type="text/css" href="css/vn.css" rel="stylesheet" />
+	<script type="text/javascript" src="../../js/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript" src="js/underscore-min.js"></script>
+	<script type="text/javascript" src="js/backbone-min.js"></script>
+	<script type="text/javascript" src="js/vne_objects.js"></script>
+	<script type="text/javascript" src="js/vne_keydown.js"></script>
+	<script type="text/javascript" src="js/vne.js"></script>
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-35487363-1']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>
+</head>
+<body>
+<div id="window">
+	<div id="pictureBox">
+		<div id="background">background
+		</div>
+		<div id="title">
+			<img  id="title_play" class="clickable" src="images/Title_Play.png" alt="play" height="40px" width="99px"/>
+			<img  id="title_play_back" src="images/Title_Play_back.png" alt="play" height="47px" width="106px"/>
+			<img  id="title_howto" class="clickable" src="images/Title_HowTo.png" alt="play" height="40px" width="259px"/>
+			<img  id="title_howto_back" src="images/Title_HowTo_back.png" alt="play" height="48px" width="267px"/>
+		</div>
+		<div id="optionsBox">optionsBox
+		</div>
+		<div id="character_left">character_left
+		</div>
+		<div id="character_right">character_right
+		</div>
+	</div>
+	<div id="uiBar">
+		<div id="speaker">---</div>
+		<div id="textBox"><p id="text">...</p>
+		</div>
+		<div id="menuBar">
+		<ul>
+			<li id="back"><img class="clickable" src="images/Arrow_Left.png" alt="back" width="40px" height="40px"/></li>
+			<li id="forward"><img class="clickable" src="images/Arrow_Right.png" alt="forward" width="40px" height="40px"/></li>
+			<li id="help"><img class="clickable" src="images/Help.png" alt="help" width="40px" height="40px"/></li>
+		</ul>
+		</div>
+	</div>
+	<div id="helpWindow">
+		<img id="esc" class="clickable" src="images/Exit.png" alt="exit" width="20px" height="20px"/>
+		<h1>How to Play</h1>
+		<p>This game is a simple visual novel, it works much like a choose
+		your own adventure novel. Press Enter to continue the story, and at 
+		some point you may reach a decision point, where you
+		will be able to make a choice that will affect how the story continues.</p>
+		<h3>Controls</h3>
+		<p><img src="images/Arrow_Right.png" alt="forward" width="20" height="20px"/>
+		 Forward Button or 'Enter': Advance to the next line in the story.<br/><br/>
+		 <img class="clickable" src="images/Arrow_Left.png" alt="back" width="20px" height="20px"/>
+		 Back Button or 'Back Arrow': Look back at the text log (currently not functional).<br/><br/>
+		 <img class="clickable" src="images/Help.png" alt="help" width="20px" height="20px"/>
+		 Help Button: Open up this "How to Play" Screen.<br/><br/>
+		 'Space Bar': Hide UI, only show the background.
+		 </p>
+	</div>
+</div>
+</body>
+</html>
