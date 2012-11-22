@@ -1,4 +1,4 @@
-/*	Visual Novel Engine v0.75
+/*	Visual Novel Engine v0.9
 	Copyright 2012 Brian Crucitti - bcrucitti@gmail.com
 	
 	This file is part of Visual Novel Engine.

@@ -1,6 +1,5 @@
 [background: Classroom.png;]
 Narator: This is your first day at Weird School.
-[goto: +5;]
 See how weird it is? There is that weird cloud thing in the background.
 So yeah, weird.
 .....
