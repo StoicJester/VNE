@@ -278,6 +278,7 @@ var vne_defineObjects = function(){//Setup
 			var url = "retreiveText.php";
 			var text = ""
 			var vn = this;
+			this.uiBar.setText("");
 			$.post(url, {'file':file}).complete(function(data){
 				text = data.responseText.split("\n");
 				vn.scriptText = text;
@@ -311,17 +312,17 @@ var vne_defineObjects = function(){//Setup
 		//Interpret a command line from text into actions
 		interpretCommand: function(msg){
 			//?loop if '[' isn't closed?
+			msg = jQuery.trim(msg);
 			msg = msg.replace(/(^\[|\]$)/g,"");
+			msg = msg.replace(/;$/g,"");
 			var cmdList = msg.split(/;/g)
+			console.log(cmdList);
 			for(var i=0;i<cmdList.length;i++){
 				var currCmd = cmdList[i].replace(/;/g,"");
 				var cmd = currCmd.split(/:/g);
-				if(cmd.length<2){
-					continue;
-				}
 				var att = jQuery.trim(cmd[0]);
-				var eff = jQuery.trim(cmd[1]);
-				this.sendCommand(att, eff);
+				var arg = jQuery.trim(cmd[1]);
+				this.sendCommand(att, arg);
 			}
 		},
 		//Interpret an option line from text into actions
@@ -339,7 +340,6 @@ var vne_defineObjects = function(){//Setup
 				msg = jQuery.trim(msg);
 			}			
 			msg = msg.replace(/(^{|}$)/g,"");
-			console.log(msg);
 			var opList = msg.split(/,/g)
 			console.log(opList);
 			for(var i=0;i<opList.length;i++){
@@ -356,9 +356,9 @@ var vne_defineObjects = function(){//Setup
 			this.isDecisionPoint=true;
 		},
 		//Send a command to the correct piece of the vn
-		sendCommand: function(att, arg){
-			att = att.toLowerCase();
-			switch(att){
+		sendCommand: function(cmd, arg){
+			cmd = cmd.toLowerCase();
+			switch(cmd){
 			case 'background':
 				this.background.alter(arg);
 				this.nextLine();
@@ -378,20 +378,30 @@ var vne_defineObjects = function(){//Setup
 				this.setLine(arg);
 				this.nextLine();
 				break;
+			case 'nothing':
+				this.nextLine();
+				break;
+				
+			default:
+				this.nextLine();
+				break;
 			}
 		},
 		setLine: function(arg){
-			if((typeof arg === "number") && Math.floor(arg) === arg){
-				this.scriptLine = arg-1;
+			console.log(typeof arg);
+			if(arg.charAt(0) == '+'){
+				var val = parseInt(arg.slice(1),10)-1;
+				console.log(val);
+				this.scriptLine += val;
+			}else if(arg.charAt(0) == '-'){
+				var val = parseInt(arg.slice(1),10)+1;
+				console.log(val);
+				this.scriptLine -= val;
 			}else{
-				if(arg.charAt(0) == '+'){
-					var val = parseInt(arg.slice(1),10)-1;
-					console.log(val);
-					this.scriptLine += val;
-				}else if(arg.charAt(0) == '-'){
-					var val = parseInt(arg.slice(1),10)+1;
-					console.log(val);
-					this.scriptLine -= val;
+				var val = parseInt(arg);
+				if(Math.floor(val) == parseInt(arg)){					
+					console.log('int ',val);
+					this.scriptLine = parseInt(arg)-2;
 				}
 			}
 		}

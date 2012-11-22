@@ -11,9 +11,11 @@ Friend: "This is a new game."
 [character_left: Person_Template.png;]
 Mu: "What do you want to do?"
 {Jump rope!: [nothing],
-Kick the can!:[nothing],
+Kick the can!:[goto: 18],
 Shoot the breeze! :[load_text: sample2.txt]}
-NO ONE WANTS TO DO THAT!!!!!
-CHOOSE AGAIN!!!!
-[goto: -5;]
+But we don't have a rope...
+[goto: 19;]
+But we don't have a can...
+Try Again
+[goto: 13;]
 ---: fin

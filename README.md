@@ -3,7 +3,9 @@ VNE
 
 A web-based Visual Novel Engine. Uses JavaScript, jQuery, Backbone.js, and Underscore.js
 
-Any questions or desires can be directed to my email: bcrucitti@gmail.com
+Requires jQuery, Backbone.js, and Underscore.js
+
+Any questions or desires can be directed to my email: bcrucitti(at)gmail.com
 
 The goal of this engine is to be user friendly, so anyone using this to make a game
 should only have to set up title screen options and the script(s) used
@@ -61,6 +63,7 @@ by the game.
 			If this is used in a decision point section, then it will move relative to the '}'
 			at the end of the section.
 
+	nothing: Proceed as usual. Used as a place holder in decision points.
 
  -Decision Points
 	Decision points present options to the player and different commands can be

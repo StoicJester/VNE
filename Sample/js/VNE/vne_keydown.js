@@ -26,7 +26,6 @@ var vne_keydown = function(vn){
 				supressEvent(event);
 				var command = vn.optionsBox.confirmSelection();
 				vn.optionsBox.clearChoices();
-				console.log(command);
 				vn.interpretCommand(command);
 				vn.isDecisionPoint = false;
 			} else
