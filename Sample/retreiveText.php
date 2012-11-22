@@ -17,7 +17,11 @@
     You should have received a copy of the GNU Lesser General Public License
     along with Visual Novel Engine.  If not, see <http://www.gnu.org/licenses/>.
 */
-	$file = fopen('sample.txt','r');
+	$filename = 'sample.txt';
+	if(isset($_POST['file'])){
+		$filename = $_POST['file'];
+	}
+	$file = fopen($filename,'r');
 	while($out = fgets($file)){
 		echo $out;
 	}		

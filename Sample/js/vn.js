@@ -21,7 +21,6 @@
 */
 
 $(document).ready(function() {
-	$("#title_play_back").hide();
 	
 	vne_defineObjects();
 	var vn = new VisualNovel;
@@ -30,7 +29,7 @@ $(document).ready(function() {
 	var option = new TitleOption;
 	option.confirmed = function(){
 		vn.uiBar.show();
-		vn.retreiveText();
+		vn.retreiveText("sample.txt");
 		vn.isTitleScreen = false;
 		vn.title.hide();
 	}
@@ -62,8 +61,9 @@ $(document).ready(function() {
 	};
 	vn.addTitleOption(option);
 	// end title screen option setup
-	vn.init();
 	
+	vn.init();
+	//Start taking keyboard input
 	vne_keydown(vn);
 	
 });

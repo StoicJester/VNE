@@ -19,14 +19,27 @@
 
 var vne_keydown = function(vn){
 	$(document).keydown(function(event) {
-		console.info(event.which);
+		// console.info(event.which);
 		var key = event.which;
-		/* if(vn.isDp){//If we are in a decision point.
+		if(vn.isDecisionPoint){//If we are in a decision point.
 			if(key==13){ //Enter
 				supressEvent(event);
+				var command = vn.optionsBox.confirmSelection();
+				vn.optionsBox.clearChoices();
+				console.log(command);
+				vn.interpretCommand(command);
+				vn.isDecisionPoint = false;
+			} else
+			if(key==38){ //Up
+				supressEvent(event);
+				vn.optionsBox.selectionUp();
+			} else
+			if(key==40){ //Down
+				supressEvent(event);
+				vn.optionsBox.selectionDown();
 			}
 			return;
-		} */
+		}
 		if(vn.isHelpScreen){//If we are in the help screen.
 			if(key==13){ //Enter
 				supressEvent(event);

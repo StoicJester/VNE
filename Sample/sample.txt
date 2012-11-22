@@ -1,0 +1,19 @@
+[background: Classroom.png;]
+Narator: This is your first day at Weird School.
+[goto: +5;]
+See how weird it is? There is that weird cloud thing in the background.
+So yeah, weird.
+.....
+Moving on....
+Oh look, here comes Friend and his friend Mu.
+[character_right: Friend.png;]
+Friend: "This is a new game."
+[character_left: Person_Template.png;]
+Mu: "What do you want to do?"
+{Jump rope!: [nothing],
+Kick the can!:[nothing],
+Shoot the breeze! :[load_text: sample2.txt]}
+NO ONE WANTS TO DO THAT!!!!!
+CHOOSE AGAIN!!!!
+[goto: -5;]
+---: fin

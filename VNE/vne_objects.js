@@ -58,8 +58,61 @@ var vne_defineObjects = function(){//Setup
 	//Backbone Model for the options menu
 	Options = Backbone.Model.extend({
 		el: $("#optionsBox"),
+		choices: [],
 		initialize: function(){
+			this.hide();
+		},
+		hide: function(){
 			this.el.hide();
+		},
+		addChoice: function(choice, effect){
+			this.choices.push({'choice':choice,'effect':effect});
+		},
+		clearChoices: function(){
+			this.hide();
+			this.choices = [];
+		},
+		showOptions: function(){
+			var out = "<ul>";
+			for(var i=0;i<this.choices.length;i++){
+				out += li({item: this.choices[i]['choice']});
+			}
+			out += "</ul>";
+			this.el.html(out);
+			this.el.show();
+			this.selection = 0;
+			this.setSelection(this.selection);
+		},
+		confirmSelection: function(){
+			return this.choices[this.selection]['effect'];
+		},
+		setSelection: function(item){
+			var out = "<ul>";
+			for(var i=0;i<this.choices.length;i++){
+				if(i==item){
+					out += '<li class="white">'+this.choices[i]['choice']+'</li>';
+				}else{
+					out += li({item: this.choices[i]['choice']});
+				}
+			}
+			out += "</ul>";
+			this.el.html(out);
+		},
+		selectionDown: function(){
+			if(this.selection >= this.choices.length-1){
+				this.selection = this.choices.length-1;
+			}else{
+				this.selection++;
+			}
+			this.setSelection(this.selection);
+		},
+		selectionUp: function(){
+			if(this.selection <= 0){
+				this.selection = 0;
+			}else{
+				this.selection--;
+			}
+			this.setSelection(this.selection);
 		}
 	});
 	//Backbone Model for the text bar, contains speaker box and text box
@@ -181,10 +234,9 @@ var vne_defineObjects = function(){//Setup
 		uiBar: new UiBar,
 		menuBar: new MenuBar,
 		title: new Title,
-		scriptText: ['...'],
-		scriptLine: 0,
+		// game: new Game,
 		
-		// isDp: false,
+		isDecisionPoint: false,
 		isTitleScreen: true,
 		isHelpScreen: false,
 		
@@ -200,12 +252,13 @@ var vne_defineObjects = function(){//Setup
 			this.character_left.hide();
 			this.character_right.hide();
 			
+			//?
 			this.helpScreen.el.click(function(){
 				vn.helpScreen.hide();
 				vn.isHelpScreen = false;
 			});
 			
-			//initialize title buttons
+			//initialize title screen
 			this.title.init();
 		},
 		//Add option to title screen
@@ -216,28 +269,34 @@ var vne_defineObjects = function(){//Setup
 		switchHidden: function(){
 			this.uiBar.switchHidden();
 		},
+		
+	//Gameplay
+		scriptText: ['...'],
+		scriptLine: 0,
 		//Retreive text using an ajax request
-		retreiveText: function(){
+		retreiveText: function(file){
 			var url = "retreiveText.php";
 			var text = ""
 			var vn = this;
-			$.post(url).complete(function(data){
+			$.post(url, {'file':file}).complete(function(data){
 				text = data.responseText.split("\n");
 				vn.scriptText = text;
 				vn.scriptLine = -1;
 				vn.nextLine();
 			});
 		},
-		/*Move on to the next line of the script
-		*/
+		//Move on to the next line of the script
 		nextLine: function(){
 			this.scriptLine++;
 			if(this.scriptLine >= this.scriptText.length){
+				console.info("End of Script");
 				return;
 			}
 			var msg = this.scriptText[this.scriptLine];
 			if(msg.charAt(0) == '['){
 				this.interpretCommand(msg);
+			}else if(msg.charAt(0) == '{'){
+				this.interpretOptions(msg);
 			}else{
 				var loc = msg.search(/:/);
 				if(loc != -1){
@@ -249,9 +308,9 @@ var vne_defineObjects = function(){//Setup
 				this.uiBar.setText(msg);
 			}
 		},
-		/*Interpret a command line from text into actions
-		*/
+		//Interpret a command line from text into actions
 		interpretCommand: function(msg){
+			//?loop if '[' isn't closed?
 			msg = msg.replace(/(^\[|\]$)/g,"");
 			var cmdList = msg.split(/;/g)
 			for(var i=0;i<cmdList.length;i++){
@@ -264,25 +323,84 @@ var vne_defineObjects = function(){//Setup
 				var eff = jQuery.trim(cmd[1]);
 				this.sendCommand(att, eff);
 			}
-			this.nextLine();
 		},
-		/*Send a command to the correct piece of the vn
-		*/
-		sendCommand: function(att, eff){
+		//Interpret an option line from text into actions
+		interpretOptions: function(msg){
+			msg = jQuery.trim(msg);
+			var optionLine = this.scriptLine;
+			while(msg.search(/}/g) == -1){
+				// console.error("} not found");
+				this.scriptLine++;
+				if(this.scriptLine >= this.scriptText.length){
+					console.error("No closing '}' for options on line "+optionLine);
+					return;
+				}
+				msg += this.scriptText[this.scriptLine];
+				msg = jQuery.trim(msg);
+			}			
+			msg = msg.replace(/(^{|}$)/g,"");
+			console.log(msg);
+			var opList = msg.split(/,/g)
+			console.log(opList);
+			for(var i=0;i<opList.length;i++){
+				var currOp = opList[i];
+				
+				var loc = currOp.search(/:/);
+				var option = currOp.slice(0,loc);
+				var effect = currOp.slice(loc+1);
+				option = jQuery.trim(option);
+				effect = jQuery.trim(effect);
+				this.optionsBox.addChoice(option,effect);
+			}
+			this.optionsBox.showOptions();
+			this.isDecisionPoint=true;
+		},
+		//Send a command to the correct piece of the vn
+		sendCommand: function(att, arg){
 			att = att.toLowerCase();
 			switch(att){
 			case 'background':
-				this.background.alter(eff);
+				this.background.alter(arg);
+				this.nextLine();
 				break;
 			case 'character_left':
-				this.character_left.alter(eff);
+				this.character_left.alter(arg);
+				this.nextLine();
 				break;
 			case 'character_right':
-				this.character_right.alter(eff);
+				this.character_right.alter(arg);
+				this.nextLine();
+				break;
+			case 'load_text':
+				this.retreiveText(arg);
+				break;
+			case 'goto':
+				this.setLine(arg);
+				this.nextLine();
 				break;
 			}
+		},
+		setLine: function(arg){
+			if((typeof arg === "number") && Math.floor(arg) === arg){
+				this.scriptLine = arg-1;
+			}else{
+				if(arg.charAt(0) == '+'){
+					var val = parseInt(arg.slice(1),10)-1;
+					console.log(val);
+					this.scriptLine += val;
+				}else if(arg.charAt(0) == '-'){
+					var val = parseInt(arg.slice(1),10)+1;
+					console.log(val);
+					this.scriptLine -= val;
+				}
+			}
 		}
+		
 	});
 //\\End Models
 };//End Setup
-	
+
+
+//Template
+var list = _.template("<% _.each(items, function(name) { %> <li><%= name %></li> <% }); %>");
+var li = _.template("<li><%- item %></li>");
