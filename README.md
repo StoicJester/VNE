@@ -5,6 +5,8 @@ A web-based Visual Novel Engine. Uses JavaScript, jQuery, Backbone.js, and Under
 
 Requires jQuery, Backbone.js, and Underscore.js
 
+Released under the MIT License
+
 Any questions or desires can be directed to my email: bcrucitti(at)gmail.com
 
 The goal of this engine is to be user friendly, so anyone using this to make a game

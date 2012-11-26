@@ -173,8 +173,7 @@ body {
   margin-right: 30px;
 }
 .clickable:hover {
-  /*cursor: pointer;*/
-
+  cursor: pointer;
 }
 .red {
   color: red;
