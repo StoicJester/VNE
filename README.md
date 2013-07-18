@@ -14,7 +14,8 @@ should only have to set up title screen options and the script(s) used
 by the game.
 
 
-+Title Screen Setup
+#####+Title Screen Setup
+```
 	var vn = new VisualNovel;
 	var option = new TitleOption; //create a new option
 	option.confirmed = function(){
@@ -31,9 +32,9 @@ by the game.
 	};
 	vn.addTitleOption(option); //add option to Visual Novel object
 	//repeat the above steps for each option on your title screen 
+```
 
-
-+Script Setup
+#####+Script Setup
 
 	The engine works by reading from a script, which in the sample is pulled from a text file.
 	Any lines starting with '[' are treated as command lines, and the instructions on them will be
@@ -42,7 +43,7 @@ by the game.
 	everything before the ':' as the name of the character speaking and will put that text into the 
 	speaker div.
 
- -Script Commands
+#####-Script Commands
 	Script commands follow the format of:
 	[command: argument{; command: arguement;}]
 	
@@ -67,7 +68,7 @@ by the game.
 
 	nothing: Proceed as usual. Used as a place holder in decision points.
 
- -Decision Points
+#####-Decision Points
 	Decision points present options to the player and different commands can be
 	activated depending on the selected option.
 	Decision points follow the format of:
